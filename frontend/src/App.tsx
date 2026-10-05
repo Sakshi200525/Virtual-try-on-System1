@@ -1,93 +1,189 @@
 import { useState } from "react";
 
-import Navbar from "./components/Navbar";
+function SizePrediction() {
 
-import Home from "./pages/Home";
-import TryOn from "./pages/TryOn";
-import Recommendation from "./pages/Recommendation";
-import About from "./pages/About";
+  const [chest, setChest] =
+    useState("");
 
-function App() {
+  const [waist, setWaist] =
+    useState("");
 
-  const [currentPage, setCurrentPage] =
-    useState("home");
+  const [hip, setHip] =
+    useState("");
 
-  const navigate = (page) => {
+  const [size, setSize] =
+    useState("");
 
-    setCurrentPage(page);
+  const predictSize = () => {
 
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
-  };
+    const chestValue =
+      Number(chest);
 
-  const renderPage = () => {
+    const waistValue =
+      Number(waist);
 
-    switch (currentPage) {
+    const hipValue =
+      Number(hip);
 
-      case "tryon":
-        return <TryOn />;
+    if (
+      !chestValue ||
+      !waistValue ||
+      !hipValue
+    ) {
 
-      case "recommendation":
-        return <Recommendation />;
+      alert(
+        "Please enter all measurements."
+      );
 
-      case "about":
-        return <About />;
-
-      case "home":
-      default:
-        return (
-          <Home
-            onNavigate={navigate}
-          />
-        );
+      return;
     }
+
+    const average =
+      (
+        chestValue +
+        waistValue +
+        hipValue
+      ) / 3;
+
+    let predictedSize;
+
+    if (average < 32) {
+
+      predictedSize = "S";
+
+    } else if (average < 36) {
+
+      predictedSize = "M";
+
+    } else if (average < 40) {
+
+      predictedSize = "L";
+
+    } else {
+
+      predictedSize = "XL";
+
+    }
+
+    setSize(predictedSize);
   };
 
   return (
 
-    <div className="app">
+    <div className="page-container">
 
-      <Navbar
-        currentPage={currentPage}
-        onNavigate={navigate}
-      />
+      <div className="page-header">
 
-      <main>
-        {renderPage()}
-      </main>
+        <h1>
+          Size Prediction
+        </h1>
 
-      <footer className="footer">
+        <p>
+          Enter your measurements to
+          estimate your clothing size.
+        </p>
 
-        <div>
+      </div>
 
-          <h3>
-            VirtualFit
-          </h3>
+      <div
+        className="card"
+        style={{
+          maxWidth: "600px",
+          margin: "auto"
+        }}
+      >
 
-          <p>
-            AI-Based Virtual Try-On System
-          </p>
+        <div className="input-group">
+
+          <label>
+            Chest / Bust (inches)
+          </label>
+
+          <input
+            type="number"
+            placeholder="Example: 34"
+            value={chest}
+            onChange={(event) =>
+              setChest(
+                event.target.value
+              )
+            }
+          />
 
         </div>
 
-        <div>
+        <div className="input-group">
 
-          <p>
-            Final Year Project
-          </p>
+          <label>
+            Waist (inches)
+          </label>
 
-          <p>
-            © 2026 VirtualFit
-          </p>
+          <input
+            type="number"
+            placeholder="Example: 30"
+            value={waist}
+            onChange={(event) =>
+              setWaist(
+                event.target.value
+              )
+            }
+          />
 
         </div>
 
-      </footer>
+        <div className="input-group">
+
+          <label>
+            Hip (inches)
+          </label>
+
+          <input
+            type="number"
+            placeholder="Example: 36"
+            value={hip}
+            onChange={(event) =>
+              setHip(
+                event.target.value
+              )
+            }
+          />
+
+        </div>
+
+        <button
+          className="primary-btn"
+          onClick={predictSize}
+        >
+          Predict My Size
+        </button>
+
+        {size && (
+
+          <div className="size-result">
+
+            <h3>
+              Predicted Size
+            </h3>
+
+            <div className="size-value">
+              {size}
+            </div>
+
+            <p>
+              This is currently a demo
+              prediction. The final system
+              can connect this page to your
+              ML size prediction model.
+            </p>
+
+          </div>
+
+        )}
+
+      </div>
 
     </div>
   );
 }
 
-export default App;
+export default SizePrediction;
