@@ -1,61 +1,79 @@
-function Navbar ({
-    currentPage,
-    onNavigate
+function Navbar({
+  currentPage,
+  onNavigate,
 }) {
-    return (
-        <header className="navbar">
-            <div className="logo-area"
-            onClick ={() =>
-                onNavigate("home")
-            } >
+  const navItems = [
+    {
+      id: "home",
+      label: "Home",
+    },
+    {
+      id: "tryon",
+      label: "Virtual Try-On",
+    },
+    {
+      id: "body",
+      label: "Body Analysis",
+    },
+    {
+      id: "recommendations",
+      label: "Recommendations",
+    },
+    {
+      id: "size",
+      label: "Size AI",
+    },
+  ];
 
-                <div className="logo-icon">VF</div>
+  return (
+    <header className="navbar">
+      <div
+        className="brand"
+        onClick={() => onNavigate("home")}
+      >
+        <div className="brand-logo">
+          VF
+        </div>
 
-                <div>
-                    <h2>VirtualFit</h2>
-                    <span>AI Virtual Try-On</span>
-                </div>
-            </div>
+        <div>
+          <div className="brand-name">
+            VirtualFit
+          </div>
 
-            <nav className="nav-links">
-                <button
-                  className={
-                    currentPage === "home"
-                    ? "nav-btn action"
-                    : "nav-btn"
-                  }
-                  onClick={() =>
-                    onNavigate("tryon")
-                  } >
-                    Virtual Try-On
-                  </button>
+          <span className="brand-subtitle">
+            AI FASHION EXPERIENCE
+          </span>
+        </div>
+      </div>
 
-                  <button 
-                   className= {
-                    currentPage === "recommendation"
-                    ? "nav-btn-active"
-                    : "nav-btn"
-                   }
-                   onClick={() =>
-                    onNavigate("recommendation")
-                   } >
-                    Recommendations
-                   </button>
+      <nav className="nav-menu">
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            className={
+              currentPage === item.id
+                ? "nav-item active"
+                : "nav-item"
+            }
+            onClick={() =>
+              onNavigate(item.id)
+            }
+          >
+            {item.label}
+          </button>
+        ))}
 
-                    <button
-                        className={
-                        currentPage === "about"
-                          ? "nav-btn active"
-                          : "nav-btn"
-                        }
-                        onClick={() =>
-                        onNavigate("about")
-                    }
+        <button
+          className="nav-cta"
+          onClick={() =>
+            onNavigate("tryon")
+          }
         >
-          About
+          Try Now →
         </button>
-            </nav>
-
-        </header>
-    )
+      </nav>
+    </header>
+  );
 }
+
+export default Navbar;

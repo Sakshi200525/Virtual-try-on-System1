@@ -1,79 +1,151 @@
 function Home({ onNavigate }) {
   return (
     <>
+      <section className="hero-section">
 
-      {/* HERO */}
+        <div className="hero-container">
 
-      <section className="hero">
+          <div>
 
-        <div className="hero-content">
+            <div className="hero-badge">
+              ✨ AI-POWERED FASHION TECHNOLOGY
+            </div>
 
-          <span className="hero-badge">
-            ✨ AI Powered Fashion Technology
-          </span>
+            <h1 className="hero-title">
 
-          <h1 className="hero-title">
+              Your Style.
+              <br />
 
-            Try Clothes
-            <br />
+              <span className="gradient-text">
+                Your Fit.
+              </span>
 
-            <span>
-              Before You Buy
-            </span>
+              <br />
 
-          </h1>
+              Your Confidence.
 
-          <p className="hero-description">
+            </h1>
 
-            Experience the future of online fashion
-            with our AI-Based Virtual Try-On System.
-            Upload your image, analyze your body shape,
-            try different outfits and get personalized
-            recommendations.
+            <p className="hero-description">
+              Experience the future of online
+              fashion. Upload your photo, create
+              your personalized body profile,
+              virtually try clothes and discover
+              styles made for you.
+            </p>
 
-          </p>
+            <div className="hero-actions">
 
-          <div className="hero-buttons">
+              <button
+                className="primary-btn"
+                onClick={() =>
+                  onNavigate("tryon")
+                }
+              >
+                Start Virtual Try-On →
+              </button>
 
-            <button
-              className="primary-btn"
-              onClick={() =>
-                onNavigate("tryon")
-              }
-            >
-              Start Virtual Try-On
-            </button>
+              <button
+                className="secondary-btn"
+                onClick={() =>
+                  onNavigate(
+                    "recommendations"
+                  )
+                }
+              >
+                Explore AI Styles
+              </button>
 
-            <button
-              className="secondary-btn"
-              onClick={() =>
-                onNavigate("body")
-              }
-            >
-              Analyze My Body
-            </button>
+            </div>
 
           </div>
 
-        </div>
+          <div className="hero-visual">
 
-        <div className="hero-visual">
+            <div className="floating-card one">
 
-          <div className="avatar-placeholder">
-            👗
+              <div className="floating-icon">
+                🧍
+              </div>
+
+              <strong>
+                AI Body Analysis
+              </strong>
+
+              <span>
+                Personalized profile
+              </span>
+
+            </div>
+
+            <div className="hero-image-card">
+
+              <img
+                src="/src/assets/hero.png"
+                alt="Virtual fashion"
+                onError={(event) => {
+                  event.currentTarget.style.display =
+                    "none";
+                }}
+              />
+
+              <div className="hero-image-overlay">
+
+                <strong>
+                  Smart Virtual Styling
+                </strong>
+
+                <span>
+                  Try. Discover. Shop with confidence.
+                </span>
+
+              </div>
+
+            </div>
+
+            <div className="floating-card two">
+
+              <div className="floating-icon">
+                ✨
+              </div>
+
+              <strong>
+                94% Style Match
+              </strong>
+
+              <span>
+                AI recommendation
+              </span>
+
+            </div>
+
           </div>
 
         </div>
 
       </section>
 
-      {/* FEATURES */}
+      <section className="section">
 
-      <section className="features-section">
+        <div className="section-heading">
 
-        <h2 className="section-title">
-          System Features
-        </h2>
+          <div className="section-label">
+            ONE SMART PLATFORM
+          </div>
+
+          <h2 className="section-title">
+            Everything you need to find
+            your perfect style
+          </h2>
+
+          <p className="section-description">
+            Our intelligent fashion system
+            combines body analysis, virtual
+            try-on, size prediction and
+            personalized recommendations.
+          </p>
+
+        </div>
 
         <div className="feature-grid">
 
@@ -84,12 +156,13 @@ function Home({ onNavigate }) {
             </div>
 
             <h3>
-              Body Analysis
+              Smart Image Upload
             </h3>
 
             <p>
-              Analyze body shape, height and
-              important body measurements.
+              Upload your photo and let our
+              system prepare it for your
+              personalized experience.
             </p>
 
           </div>
@@ -97,7 +170,24 @@ function Home({ onNavigate }) {
           <div className="feature-card">
 
             <div className="feature-icon">
-              👕
+              🧍
+            </div>
+
+            <h3>
+              Body Analysis
+            </h3>
+
+            <p>
+              Understand your body profile,
+              measurements and shape.
+            </p>
+
+          </div>
+
+          <div className="feature-card">
+
+            <div className="feature-icon">
+              👗
             </div>
 
             <h3>
@@ -105,8 +195,8 @@ function Home({ onNavigate }) {
             </h3>
 
             <p>
-              Virtually try different garments
-              before purchasing.
+              Visualize how different garments
+              can look on your personalized avatar.
             </p>
 
           </div>
@@ -122,25 +212,8 @@ function Home({ onNavigate }) {
             </h3>
 
             <p>
-              Get outfit suggestions based on
-              your body shape.
-            </p>
-
-          </div>
-
-          <div className="feature-card">
-
-            <div className="feature-icon">
-              📏
-            </div>
-
-            <h3>
-              Size Prediction
-            </h3>
-
-            <p>
-              Predict suitable clothing sizes
-              using body measurements.
+              Discover outfits selected according
+              to your body profile and preferences.
             </p>
 
           </div>
@@ -149,6 +222,46 @@ function Home({ onNavigate }) {
 
       </section>
 
+      <section
+        className="section"
+        style={{
+          paddingTop: 30,
+        }}
+      >
+
+        <div className="stats-grid">
+
+          <div className="stat-card">
+            <strong>AI</strong>
+            <span>
+              Personalized Styling
+            </span>
+          </div>
+
+          <div className="stat-card">
+            <strong>3D</strong>
+            <span>
+              Virtual Avatar
+            </span>
+          </div>
+
+          <div className="stat-card">
+            <strong>360°</strong>
+            <span>
+              Fashion Experience
+            </span>
+          </div>
+
+          <div className="stat-card">
+            <strong>Smart</strong>
+            <span>
+              Size Prediction
+            </span>
+          </div>
+
+        </div>
+
+      </section>
     </>
   );
 }

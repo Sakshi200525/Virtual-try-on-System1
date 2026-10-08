@@ -10,29 +10,38 @@ html {
 
 body {
   margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
 
   font-family:
+    Inter,
+    "Segoe UI",
+    Roboto,
     Arial,
-    Helvetica,
     sans-serif;
 
-  background: #f8fafc;
-
-  color: #1e293b;
+  background: #faf9ff;
+  color: #17151f;
 }
 
 button,
 input,
-select {
-  font-family: inherit;
+select,
+textarea {
+  font: inherit;
 }
 
 button {
   cursor: pointer;
 }
 
+a {
+  text-decoration: none;
+}
+
 img {
   max-width: 100%;
+  display: block;
 }
 
 #root {

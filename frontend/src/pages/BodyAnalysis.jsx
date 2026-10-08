@@ -1,228 +1,164 @@
 import { useState } from "react";
 
-function BodyAnalysis() {
+import ImageUpload from "../components/ImageUpload";
+import AvatarViewer from "../components/AvatarViewer";
+import BodyMeasurements from "../components/BodyMesurements";
 
+function BodyAnalysis({ onNavigate }) {
   const [image, setImage] =
     useState(null);
 
-  const [result, setResult] =
-    useState(null);
+  const [analyzed, setAnalyzed] =
+    useState(false);
 
-  const handleImageChange = (event) => {
-
-    const file =
-      event.target.files[0];
-
-    if (!file) {
-      return;
-    }
-
-    const imageURL =
-      URL.createObjectURL(file);
-
-    setImage(imageURL);
-
-    setResult(null);
+  const measurements = {
+    Height: "165 cm",
+    Shoulder: "38 cm",
+    Chest: "86 cm",
+    Waist: "70 cm",
+    Hip: "92 cm",
+    "Body Shape": "Hourglass",
   };
 
-  const analyzeBody = () => {
-
+  const analyze = () => {
     if (!image) {
-
       alert(
         "Please upload your image first."
       );
-
       return;
     }
 
-    /*
-      Demo result.
-
-      Later this section will call:
-      FastAPI + AI Body Analysis Model.
-    */
-
-    setResult({
-      bodyShape: "Rectangle",
-      height: "165 cm",
-      shoulder: "40 cm",
-      chest: "34 cm",
-      waist: "30 cm",
-      hip: "36 cm"
-    });
+    setAnalyzed(true);
   };
 
   return (
-
-    <div className="page-container">
+    <div className="page">
 
       <div className="page-header">
 
-        <h1>
+        <div className="section-label">
+          AI BODY INTELLIGENCE
+        </div>
+
+        <h1 className="section-title">
           Body Analysis
         </h1>
 
         <p>
-          Upload your image to analyze
-          your body shape and measurements.
+          Build your personalized fashion
+          profile using AI-powered body analysis.
         </p>
 
       </div>
 
-      <div className="form-layout">
+      <div className="dashboard-grid">
 
-        {/* UPLOAD */}
+        <div>
 
-        <div className="card">
+          <div className="panel">
 
-          <h2>
-            Upload Image
-          </h2>
+            <div className="panel-header">
 
-          <label className="upload-box">
+              <div>
+                <div className="panel-title">
+                  Upload Photo
+                </div>
 
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+                <div className="panel-subtitle">
+                  Use a clear full-body image
+                </div>
+              </div>
 
-            <div className="upload-icon">
-              📸
+              <span>
+                🧍
+              </span>
+
             </div>
 
-            <h3>
-              Choose Your Photo
-            </h3>
+            <ImageUpload
+              onImageSelect={(file, preview) =>
+                setImage({
+                  file,
+                  preview,
+                })
+              }
+            />
 
-            <p>
-              JPG, PNG or WEBP
-            </p>
+            <button
+              className="primary-btn"
+              style={{
+                width: "100%",
+                marginTop: "15px",
+              }}
+              onClick={analyze}
+            >
+              🔍 Analyze My Body
+            </button>
 
-            {image && (
+          </div>
 
-              <img
-                src={image}
-                alt="Uploaded"
-                className="preview-image"
+          {analyzed && (
+            <div className="panel">
+
+              <div className="panel-title">
+                Your Measurements
+              </div>
+
+              <div
+                className="panel-subtitle"
+                style={{
+                  marginBottom: "18px",
+                }}
+              >
+                AI estimated measurements
+              </div>
+
+              <BodyMeasurements
+                measurements={measurements}
               />
 
-            )}
-
-          </label>
-
-          <button
-            className="primary-btn"
-            onClick={analyzeBody}
-            style={{
-              width: "100%",
-              marginTop: "20px"
-            }}
-          >
-            Analyze Body
-          </button>
+            </div>
+          )}
 
         </div>
 
-        {/* RESULT */}
+        <div className="panel">
 
-        <div className="card">
+          <div className="panel-header">
 
-          <h2>
-            Analysis Result
-          </h2>
+            <div>
+              <div className="panel-title">
+                Personalized Avatar
+              </div>
 
-          {!result && (
-
-            <div className="message">
-
-              Upload an image and click
-              "Analyze Body" to see the
-              result.
-
+              <div className="panel-subtitle">
+                Your digital fashion profile
+              </div>
             </div>
 
-          )}
+            <span>
+              ✨
+            </span>
 
-          {result && (
+          </div>
 
-            <div className="result-box">
+          <AvatarViewer />
 
-              <div className="result-item">
-
-                <span>
-                  Body Shape
-                </span>
-
-                <strong>
-                  {result.bodyShape}
-                </strong>
-
-              </div>
-
-              <div className="result-item">
-
-                <span>
-                  Height
-                </span>
-
-                <strong>
-                  {result.height}
-                </strong>
-
-              </div>
-
-              <div className="result-item">
-
-                <span>
-                  Shoulder
-                </span>
-
-                <strong>
-                  {result.shoulder}
-                </strong>
-
-              </div>
-
-              <div className="result-item">
-
-                <span>
-                  Chest
-                </span>
-
-                <strong>
-                  {result.chest}
-                </strong>
-
-              </div>
-
-              <div className="result-item">
-
-                <span>
-                  Waist
-                </span>
-
-                <strong>
-                  {result.waist}
-                </strong>
-
-              </div>
-
-              <div className="result-item">
-
-                <span>
-                  Hip
-                </span>
-
-                <strong>
-                  {result.hip}
-                </strong>
-
-              </div>
-
+          {analyzed && (
+            <div
+              style={{
+                marginTop: "15px",
+                padding: "15px",
+                background: "#ecfdf5",
+                borderRadius: "12px",
+                color: "#047857",
+                fontSize: "12px",
+              }}
+            >
+              ✓ Body analysis completed.
+              Your profile is ready for
+              personalized recommendations.
             </div>
-
           )}
 
         </div>

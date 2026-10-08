@@ -1,240 +1,362 @@
 import { useState } from "react";
 
+import ImageUpload from "../components/ImageUpload";
+import TryOnViewer from "../components/TryOnViewer";
+
 const garments = [
-
   {
-    id: 1,
-    name: "Casual T-Shirt",
+    name: "T-Shirt",
     icon: "👕",
-    color: "White"
+    type: "Casual",
   },
-
   {
-    id: 2,
-    name: "Formal Shirt",
+    name: "Shirt",
     icon: "👔",
-    color: "Blue"
+    type: "Formal",
   },
-
   {
-    id: 3,
-    name: "Summer Dress",
+    name: "Dress",
     icon: "👗",
-    color: "Pink"
+    type: "Party",
   },
-
   {
-    id: 4,
-    name: "Denim Jeans",
+    name: "Jeans",
     icon: "👖",
-    color: "Blue"
+    type: "Casual",
   },
-
   {
-    id: 5,
-    name: "Traditional Kurti",
+    name: "Kurti",
     icon: "🥻",
-    color: "Red"
+    type: "Ethnic",
   },
-
   {
-    id: 6,
     name: "Saree",
     icon: "🥻",
-    color: "Green"
-  }
-
+    type: "Traditional",
+  },
 ];
 
-function VirtualTryOn() {
-
-  const [image, setImage] =
+function VirtualTryOn({ onNavigate }) {
+  const [uploadedImage, setUploadedImage] =
     useState(null);
 
   const [selectedGarment, setSelectedGarment] =
-    useState(null);
+    useState("T-Shirt");
 
-  const [message, setMessage] =
-    useState("");
+  const [selectedColor, setSelectedColor] =
+    useState("Default");
 
-  const handleImageChange =
-    (event) => {
+  const [showResult, setShowResult] =
+    useState(false);
 
-      const file =
-        event.target.files[0];
+  const handleImage = (
+    file,
+    preview
+  ) => {
+    setUploadedImage({
+      file,
+      preview,
+    });
 
-      if (!file) {
-        return;
-      }
-
-      setImage(
-        URL.createObjectURL(file)
-      );
-
-      setMessage("");
-    };
-
-  const selectGarment =
-    (garment) => {
-
-      setSelectedGarment(garment);
-
-      setMessage("");
-    };
+    setShowResult(false);
+  };
 
   const startTryOn = () => {
-
-    if (!image) {
-
-      setMessage(
-        "Please upload your image first."
+    if (!uploadedImage) {
+      alert(
+        "Please upload your photo first."
       );
-
       return;
     }
 
-    if (!selectedGarment) {
-
-      setMessage(
-        "Please select a garment."
-      );
-
-      return;
-    }
-
-    setMessage(
-      `Virtual try-on started for ${selectedGarment.name}.`
-    );
+    setShowResult(true);
   };
 
   return (
-
-    <div className="page-container">
+    <div className="page">
 
       <div className="page-header">
 
-        <h1>
+        <div className="section-label">
+          AI VIRTUAL FITTING ROOM
+        </div>
+
+        <h1 className="section-title">
           Virtual Try-On
         </h1>
 
         <p>
-          Upload your photo and select
-          an outfit to try virtually.
+          Upload your image, select a garment
+          and preview your personalized style.
         </p>
 
       </div>
 
-      {/* IMAGE */}
+      <div className="dashboard-grid">
 
-      <div className="card">
+        <div>
 
-        <h2>
-          1. Upload Your Image
-        </h2>
+          <div className="panel">
 
-        <label className="upload-box">
+            <div className="panel-header">
 
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-
-          <div className="upload-icon">
-            📷
-          </div>
-
-          <h3>
-            Choose Your Photo
-          </h3>
-
-          <p>
-            JPG, PNG or WEBP
-          </p>
-
-          {image && (
-
-            <img
-              src={image}
-              alt="Person"
-              className="preview-image"
-            />
-
-          )}
-
-        </label>
-
-      </div>
-
-      {/* GARMENTS */}
-
-      <div
-        className="card"
-        style={{
-          marginTop: "25px"
-        }}
-      >
-
-        <h2>
-          2. Select Garment
-        </h2>
-
-        <div className="garment-grid">
-
-          {garments.map(
-            (garment) => (
-
-              <div
-                key={garment.id}
-                className={
-                  selectedGarment?.id ===
-                  garment.id
-                    ? "garment-card selected"
-                    : "garment-card"
-                }
-                onClick={() =>
-                  selectGarment(
-                    garment
-                  )
-                }
-              >
-
-                <div className="garment-icon">
-                  {garment.icon}
+              <div>
+                <div className="panel-title">
+                  01. Your Photo
                 </div>
 
-                <h3>
-                  {garment.name}
-                </h3>
-
-                <p>
-                  {garment.color}
-                </p>
-
+                <div className="panel-subtitle">
+                  Upload a clear full-body photo
+                </div>
               </div>
 
-            )
+              <span>
+                📸
+              </span>
+
+            </div>
+
+            <ImageUpload
+              onImageSelect={handleImage}
+            />
+
+          </div>
+
+          <div className="panel">
+
+            <div className="panel-header">
+
+              <div>
+                <div className="panel-title">
+                  02. Select Garment
+                </div>
+
+                <div className="panel-subtitle">
+                  Choose what you want to try
+                </div>
+              </div>
+
+              <span>
+                👗
+              </span>
+
+            </div>
+
+            <div className="garment-grid">
+
+              {garments.map(
+                (garment) => (
+                  <div
+                    key={garment.name}
+                    className={
+                      selectedGarment ===
+                      garment.name
+                        ? "garment-option selected"
+                        : "garment-option"
+                    }
+                    onClick={() =>
+                      setSelectedGarment(
+                        garment.name
+                      )
+                    }
+                  >
+
+                    <div className="garment-emoji">
+                      {garment.icon}
+                    </div>
+
+                    <strong>
+                      {garment.name}
+                    </strong>
+
+                    <span>
+                      {garment.type}
+                    </span>
+
+                  </div>
+                )
+              )}
+
+            </div>
+
+          </div>
+
+          <div className="panel">
+
+            <div className="panel-title">
+              03. Select Color
+            </div>
+
+            <div
+              style={{
+                display: "flex",
+                gap: "8px",
+                flexWrap: "wrap",
+                marginTop: "15px",
+              }}
+            >
+
+              {[
+                "Default",
+                "Black",
+                "White",
+                "Red",
+                "Blue",
+                "Pink",
+              ].map((color) => (
+                <button
+                  key={color}
+                  className={
+                    selectedColor === color
+                      ? "primary-btn"
+                      : "secondary-btn"
+                  }
+                  style={{
+                    padding:
+                      "8px 12px",
+                    fontSize: "11px",
+                  }}
+                  onClick={() =>
+                    setSelectedColor(color)
+                  }
+                >
+                  {color}
+                </button>
+              ))}
+
+            </div>
+
+          </div>
+
+          <button
+            className="primary-btn"
+            style={{
+              width: "100%",
+              padding: "16px",
+            }}
+            onClick={startTryOn}
+          >
+            ✨ Generate Virtual Try-On
+          </button>
+
+          {showResult && (
+            <div
+              className="panel"
+              style={{
+                marginTop: "18px",
+                background:
+                  "linear-gradient(135deg,#f5f3ff,#fff)",
+              }}
+            >
+              <strong>
+                ✓ Virtual Try-On Ready
+              </strong>
+
+              <p
+                style={{
+                  color: "#777184",
+                  fontSize: "11px",
+                  marginTop: "6px",
+                }}
+              >
+                {selectedGarment} •{" "}
+                {selectedColor} • AI preview
+                generated successfully.
+              </p>
+            </div>
           )}
 
         </div>
 
-        <button
-          className="primary-btn"
-          onClick={startTryOn}
-          style={{
-            marginTop: "25px"
-          }}
-        >
-          Start Virtual Try-On
-        </button>
+        <div className="panel">
 
-        {message && (
+          <div className="panel-header">
 
-          <div className="message">
-            {message}
+            <div>
+              <div className="panel-title">
+                Your Virtual Fitting Room
+              </div>
+
+              <div className="panel-subtitle">
+                Interactive AI preview
+              </div>
+            </div>
+
+            <span>
+              ✨
+            </span>
+
           </div>
 
-        )}
+          <TryOnViewer
+            selectedGarment={
+              selectedGarment
+            }
+          />
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns:
+                "repeat(3,1fr)",
+              gap: "8px",
+              marginTop: "12px",
+            }}
+          >
+
+            <div
+              className="measurement-item"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <span>
+                Garment
+              </span>
+
+              <strong>
+                {selectedGarment}
+              </strong>
+            </div>
+
+            <div
+              className="measurement-item"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <span>
+                Color
+              </span>
+
+              <strong>
+                {selectedColor}
+              </strong>
+            </div>
+
+            <div
+              className="measurement-item"
+              style={{
+                textAlign: "center",
+              }}
+            >
+              <span>
+                Fit
+              </span>
+
+              <strong
+                style={{
+                  color:
+                    "#059669",
+                }}
+              >
+                Good
+              </strong>
+            </div>
+
+          </div>
+
+        </div>
 
       </div>
 

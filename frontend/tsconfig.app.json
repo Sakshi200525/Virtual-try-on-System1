@@ -22,5 +22,6 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["**/*"],
+  "exclude": ["node_modules", "dist", ".vite"]
 }

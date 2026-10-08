@@ -1,180 +1,169 @@
 import { useState } from "react";
 
-const recommendationData = {
+import RecommendationCard from "../components/RecommendationCard";
 
+const recommendationData = {
   Hourglass: [
-    "Fitted tops",
-    "Wrap dresses",
-    "High-waist jeans",
-    "Belted outfits"
+    {
+      title: "Elegant Wrap Dress",
+      description:
+        "Highlights your natural proportions while creating an elegant silhouette.",
+      icon: "👗",
+      score: 96,
+    },
+    {
+      title: "Fitted V-Neck Top",
+      description:
+        "A balanced fitted style designed for your body profile.",
+      icon: "👚",
+      score: 93,
+    },
+    {
+      title: "High-Waist Jeans",
+      description:
+        "Creates a clean and flattering waistline.",
+      icon: "👖",
+      score: 91,
+    },
   ],
 
   Rectangle: [
-    "Layered outfits",
-    "Peplum tops",
-    "High-waist trousers",
-    "Structured jackets"
+    {
+      title: "Layered Jacket Look",
+      description:
+        "Adds structure and visual definition to the silhouette.",
+      icon: "🧥",
+      score: 94,
+    },
+    {
+      title: "A-Line Dress",
+      description:
+        "Creates a stylish and balanced appearance.",
+      icon: "👗",
+      score: 90,
+    },
+    {
+      title: "Wide-Leg Jeans",
+      description:
+        "Adds shape and creates a modern fashion look.",
+      icon: "👖",
+      score: 88,
+    },
   ],
 
   Pear: [
-    "A-line dresses",
-    "Boat-neck tops",
-    "Wide-leg pants",
-    "Bright upper wear"
+    {
+      title: "Structured Blazer",
+      description:
+        "Adds balance between the upper and lower body.",
+      icon: "🧥",
+      score: 95,
+    },
+    {
+      title: "A-Line Skirt",
+      description:
+        "A classic silhouette for a balanced look.",
+      icon: "👗",
+      score: 92,
+    },
+    {
+      title: "Bright Statement Top",
+      description:
+        "Draws attention upward and creates balance.",
+      icon: "👚",
+      score: 89,
+    },
   ],
-
-  "Inverted Triangle": [
-    "A-line skirts",
-    "Wide-leg trousers",
-    "V-neck tops",
-    "Flared dresses"
-  ]
-
 };
 
 function Recommendations() {
+  const [shape, setShape] =
+    useState("Hourglass");
 
-  const [bodyShape, setBodyShape] =
-    useState("Rectangle");
-
-  const recommendations =
-    recommendationData[bodyShape];
+  const data =
+    recommendationData[shape];
 
   return (
-
-    <div className="page-container">
+    <div className="page">
 
       <div className="page-header">
 
-        <h1>
-          AI Outfit Recommendations
+        <div className="section-label">
+          PERSONALIZED AI STYLING
+        </div>
+
+        <h1 className="section-title">
+          Recommendations
         </h1>
 
         <p>
-          Get outfit recommendations
-          based on your body shape.
+          Discover fashion recommendations
+          designed around your unique body profile.
         </p>
 
       </div>
 
-      <div className="card">
+      <div
+        className="panel"
+        style={{
+          maxWidth: "600px",
+          margin:
+            "0 auto 35px",
+        }}
+      >
 
-        <div className="input-group">
+        <div className="panel-title">
+          Your Body Shape
+        </div>
 
-          <label>
-            Select Body Shape
-          </label>
+        <select
+          value={shape}
+          onChange={(event) =>
+            setShape(
+              event.target.value
+            )
+          }
+          style={{
+            width: "100%",
+            marginTop: "15px",
+            padding: "13px",
+            border:
+              "1px solid #e8e4ef",
+            borderRadius: "10px",
+            outline: "none",
+            background: "white",
+          }}
+        >
 
-          <select
-            value={bodyShape}
-            onChange={(event) =>
-              setBodyShape(
-                event.target.value
-              )
+          <option value="Hourglass">
+            Hourglass
+          </option>
+
+          <option value="Rectangle">
+            Rectangle
+          </option>
+
+          <option value="Pear">
+            Pear
+          </option>
+
+        </select>
+
+      </div>
+
+      <div className="recommendation-grid">
+
+        {data.map((item) => (
+          <RecommendationCard
+            key={item.title}
+            title={item.title}
+            description={
+              item.description
             }
-          >
-
-            <option value="Rectangle">
-              Rectangle
-            </option>
-
-            <option value="Hourglass">
-              Hourglass
-            </option>
-
-            <option value="Pear">
-              Pear
-            </option>
-
-            <option value="Inverted Triangle">
-              Inverted Triangle
-            </option>
-
-          </select>
-
-        </div>
-
-        <div className="recommendation-grid">
-
-          <div className="recommendation-card">
-
-            <h3>
-              👗 Recommended Outfits
-            </h3>
-
-            <ul>
-
-              {recommendations.map(
-                (item, index) => (
-
-                  <li key={index}>
-                    {item}
-                  </li>
-
-                )
-              )}
-
-            </ul>
-
-          </div>
-
-          <div className="recommendation-card">
-
-            <h3>
-              🎨 Style Tips
-            </h3>
-
-            <ul>
-
-              <li>
-                Select comfortable fabrics
-              </li>
-
-              <li>
-                Choose suitable colors
-              </li>
-
-              <li>
-                Consider proper fitting
-              </li>
-
-              <li>
-                Try different combinations
-              </li>
-
-            </ul>
-
-          </div>
-
-          <div className="recommendation-card">
-
-            <h3>
-              🛍️ Shopping Tips
-            </h3>
-
-            <ul>
-
-              <li>
-                Check size charts
-              </li>
-
-              <li>
-                Compare brand sizes
-              </li>
-
-              <li>
-                Check fabric details
-              </li>
-
-              <li>
-                Check return policy
-              </li>
-
-            </ul>
-
-          </div>
-
-        </div>
+            icon={item.icon}
+            score={item.score}
+          />
+        ))}
 
       </div>
 

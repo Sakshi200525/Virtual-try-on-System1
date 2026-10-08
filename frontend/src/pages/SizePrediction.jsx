@@ -1,176 +1,188 @@
 import { useState } from "react";
 
-const recommendationData = {
+import SizePredictionCard from "../components/SizePrediction";
 
-  Hourglass: [
-    "Fitted tops",
-    "Wrap dresses",
-    "High-waist jeans",
-    "Belted outfits"
-  ],
+function SizePrediction() {
+  const [height, setHeight] =
+    useState("");
 
-  Rectangle: [
-    "Layered outfits",
-    "Peplum tops",
-    "High-waist trousers",
-    "Structured jackets"
-  ],
+  const [weight, setWeight] =
+    useState("");
 
-  Pear: [
-    "A-line dresses",
-    "Boat-neck tops",
-    "Wide-leg pants",
-    "Bright upper wear"
-  ],
+  const [result, setResult] =
+    useState(false);
 
-  "Inverted Triangle": [
-    "A-line skirts",
-    "Wide-leg trousers",
-    "V-neck tops",
-    "Flared dresses"
-  ]
+  const predict = () => {
+    if (!height || !weight) {
+      alert(
+        "Please enter height and weight."
+      );
+      return;
+    }
 
-};
-
-function Recommendations() {
-
-  const [bodyShape, setBodyShape] =
-    useState("Rectangle");
-
-  const recommendations =
-    recommendationData[bodyShape];
+    setResult(true);
+  };
 
   return (
-
-    <div className="page-container">
+    <div className="page">
 
       <div className="page-header">
 
-        <h1>
-          AI Outfit Recommendations
+        <div className="section-label">
+          SMART SIZE TECHNOLOGY
+        </div>
+
+        <h1 className="section-title">
+          AI Size Prediction
         </h1>
 
         <p>
-          Get outfit recommendations
-          based on your body shape.
+          Find the right clothing size before
+          placing your order.
         </p>
 
       </div>
 
-      <div className="card">
+      <div
+        className="dashboard-grid"
+        style={{
+          maxWidth: "900px",
+          margin: "auto",
+        }}
+      >
 
-        <div className="input-group">
+        <div className="panel">
 
-          <label>
-            Select Body Shape
-          </label>
+          <div className="panel-title">
+            Your Details
+          </div>
 
-          <select
-            value={bodyShape}
-            onChange={(event) =>
-              setBodyShape(
-                event.target.value
-              )
-            }
+          <div className="panel-subtitle">
+            Enter basic measurements
+          </div>
+
+          <div
+            style={{
+              marginTop: "25px",
+            }}
           >
 
-            <option value="Rectangle">
-              Rectangle
-            </option>
+            <label
+              style={{
+                display: "block",
+                fontSize: "11px",
+                fontWeight: 700,
+                marginBottom: "7px",
+              }}
+            >
+              Height (cm)
+            </label>
 
-            <option value="Hourglass">
-              Hourglass
-            </option>
+            <input
+              type="number"
+              value={height}
+              onChange={(event) =>
+                setHeight(
+                  event.target.value
+                )
+              }
+              placeholder="e.g. 165"
+              style={{
+                width: "100%",
+                padding: "13px",
+                border:
+                  "1px solid #e8e4ef",
+                borderRadius: "10px",
+                outline: "none",
+                marginBottom: "18px",
+              }}
+            />
 
-            <option value="Pear">
-              Pear
-            </option>
+            <label
+              style={{
+                display: "block",
+                fontSize: "11px",
+                fontWeight: 700,
+                marginBottom: "7px",
+              }}
+            >
+              Weight (kg)
+            </label>
 
-            <option value="Inverted Triangle">
-              Inverted Triangle
-            </option>
+            <input
+              type="number"
+              value={weight}
+              onChange={(event) =>
+                setWeight(
+                  event.target.value
+                )
+              }
+              placeholder="e.g. 55"
+              style={{
+                width: "100%",
+                padding: "13px",
+                border:
+                  "1px solid #e8e4ef",
+                borderRadius: "10px",
+                outline: "none",
+                marginBottom: "20px",
+              }}
+            />
 
-          </select>
+            <button
+              className="primary-btn"
+              style={{
+                width: "100%",
+              }}
+              onClick={predict}
+            >
+              ✨ Predict My Size
+            </button>
+
+          </div>
 
         </div>
 
-        <div className="recommendation-grid">
+        <div className="panel">
 
-          <div className="recommendation-card">
-
-            <h3>
-              👗 Recommended Outfits
-            </h3>
-
-            <ul>
-
-              {recommendations.map(
-                (item, index) => (
-
-                  <li key={index}>
-                    {item}
-                  </li>
-
-                )
-              )}
-
-            </ul>
-
+          <div className="panel-title">
+            AI Prediction
           </div>
 
-          <div className="recommendation-card">
-
-            <h3>
-              🎨 Style Tips
-            </h3>
-
-            <ul>
-
-              <li>
-                Select comfortable fabrics
-              </li>
-
-              <li>
-                Choose suitable colors
-              </li>
-
-              <li>
-                Consider proper fitting
-              </li>
-
-              <li>
-                Try different combinations
-              </li>
-
-            </ul>
-
+          <div className="panel-subtitle">
+            Recommended size for your profile
           </div>
 
-          <div className="recommendation-card">
+          <div
+            style={{
+              marginTop: "25px",
+            }}
+          >
 
-            <h3>
-              🛍️ Shopping Tips
-            </h3>
-
-            <ul>
-
-              <li>
-                Check size charts
-              </li>
-
-              <li>
-                Compare brand sizes
-              </li>
-
-              <li>
-                Check fabric details
-              </li>
-
-              <li>
-                Check return policy
-              </li>
-
-            </ul>
+            {result ? (
+              <SizePredictionCard
+                size="M"
+                confidence="94%"
+              />
+            ) : (
+              <div
+                style={{
+                  minHeight: "250px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  color: "#777184",
+                  fontSize: "12px",
+                  background: "#faf9fd",
+                  borderRadius: "15px",
+                }}
+              >
+                Enter your details to
+                <br />
+                generate your AI size prediction.
+              </div>
+            )}
 
           </div>
 
@@ -182,4 +194,4 @@ function Recommendations() {
   );
 }
 
-export default Recommendations;
+export default SizePrediction;
